@@ -29,8 +29,26 @@ class PDFPageInterpreter(PI):
         return self.device.outfp.getvalue()
 
 class PDF(list):
-    def __init__(self, file, password=''):
-        self.parser = PDFParser(file)
+    """
+    Converts a PDF file into a list of strings. Each page's text
+    is converted into an item in the PDF object.
+
+    slate.PDF respects the security settings of the PDF file.
+
+    Arguments:
+       :password:   The password for the PDF, if required.
+
+       :just_text:  If False, the __init__ function will preserve
+                    font information and images inside the PDF.doc
+                    attribute. Refer to PDFMiner's documentation to
+                    acess it.
+
+    Attributes:
+      :metadata:    The PDF's metadata as a dict, typically includes
+                    the creation date, author, title, etc.
+    """
+    def __init__(self, f, password='', just_text=1):
+        self.parser = PDFParser(f)
         self.doc = PDFDocument()
         self.parser.set_document(self.doc)
         self.doc.set_parser(self.parser)
@@ -42,4 +60,18 @@ class PDF(list):
                self.resmgr, self.device)
             for page in self.doc.get_pages():
                 self.append(self.interpreter.process_page(page))
+        self.metadata = self.doc.info
+        if just_text:
+            self._cleanup()
 
+    def _cleanup(self):
+        """
+        Frees lots of non-textual information, such as the fonts
+        and images and the objects that were needed to parse the
+        PDF.
+        """
+        del self.device
+        del self.doc
+        del self.parser
+        del self.resmgr
+        del self.interpreter
