@@ -9,7 +9,7 @@ if version < '2.2.3':
 
 
 setup(name='slate',
-      version='0.2',
+      version='0.2.2',
       description='Extract text from PDF documents easily.',
       author='Tim McNamara',
       author_email='paperless@timmcnamara.co.nz',
@@ -28,4 +28,4 @@ setup(name='slate',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Processing',
         'Topic :: Utilities'],
-      long_description = open('README'))
+      long_description = open('README').read())
