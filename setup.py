@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='slate',
-      version='0.2.3',
+      version='0.3',
       description='Extract text from PDF documents easily.',
       author='Tim McNamara',
       author_email='paperless@timmcnamara.co.nz',
@@ -25,4 +25,4 @@ setup(name='slate',
         'Topic :: Text Processing',
         'Topic :: Utilities'],
       long_description = open('README').read(),
-      url='http://pypi.python.org/pypi/slate')
+      url='http://github.com/timClicks/slate')
