@@ -6,6 +6,8 @@ from pdfminer.pdfinterp import PDFPageInterpreter as PI
 from pdfminer.pdfdevice import PDFDevice
 from pdfminer.converter import TextConverter
 
+import utils
+
 __all__ = ['PDF']
 
 class PDFPageInterpreter(PI):
@@ -47,7 +49,7 @@ class PDF(list):
             self._cleanup()
 
     def _cleanup(self):
-        """
+        """ 
         Frees lots of non-textual information, such as the fonts
         and images and the objects that were needed to parse the
         PDF.
@@ -57,3 +59,16 @@ class PDF(list):
         del self.parser
         del self.resmgr
         del self.interpreter
+
+    def text(self, clean=True):
+        """ 
+        Returns the text of the PDF as a single string.
+        Options:
+
+          :clean:
+            Removes misc cruft, like lots of whitespace.
+        """
+        if clean:
+            return ''.join(utils.trim_whitespace(page) for page in self)
+        else:
+            return ''.join(self) 
