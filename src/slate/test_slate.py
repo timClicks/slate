@@ -9,11 +9,11 @@
 from slate import PDF
 
 def pytest_funcarg__doc(request):
-    with open('basic.pdf', 'rb') as f:
+    with open('example.pdf', 'rb') as f:
         return PDF(f)
 
 def pytest_funcarg__passwd(request):
-    with open('passwd-a.pdf') as f:
+    with open('protected.pdf') as f:
         return PDF(f, 'a')
 
 def test_basic(doc):
@@ -23,7 +23,7 @@ def test_metadata_extraction(doc):
     assert doc.metadata
 
 def test_text_method(doc):
-    assert doc.text() == "This is a test."
+    assert "This is a test" in doc.text()
 
 def test_text_method_unclean(doc):
     assert '\x0c' in doc.text(clean=0)

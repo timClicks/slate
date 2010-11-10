@@ -69,6 +69,6 @@ class PDF(list):
             Removes misc cruft, like lots of whitespace.
         """
         if clean:
-            return ''.join(utils.trim_whitespace(page) for page in self)
+            return utils.normalise_whitespace(''.join(self))
         else:
             return ''.join(self) 
