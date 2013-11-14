@@ -1,10 +1,11 @@
 from StringIO import StringIO
 
-from pdfminer.pdfparser import PDFParser, PDFDocument
+from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfinterp import PDFPageInterpreter as PI
 from pdfminer.pdfdevice import PDFDevice
 from pdfminer.converter import TextConverter
+from pdfminer.pdfdocument import PDFDocument
 
 import utils
 
