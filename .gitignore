@@ -1,6 +1,7 @@
-MANIFEST
+./MANIFEST
 build/*
 dist/*
 *~
 *.pyc
 *.pyo
+slate.egg-info
