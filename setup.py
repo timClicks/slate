@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='slate',
-      version='0.3',
+      version='0.4',
       description='Extract text from PDF documents easily.',
       author='Tim McNamara',
       author_email='paperless@timmcnamara.co.nz',
