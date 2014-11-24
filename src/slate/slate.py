@@ -1,4 +1,3 @@
-from operator import attrgetter
 try:
     from cStringIO import StringIO
 except ImportError:
