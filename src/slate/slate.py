@@ -1,3 +1,4 @@
+from operator import attrgetter
 try:
     from cStringIO import StringIO
 except ImportError:
@@ -60,11 +61,11 @@ class PDF(list):
         and images and the objects that were needed to parse the
         PDF.
         """
-        del self.device
-        del self.doc
-        del self.parser
-        del self.resmgr
-        del self.interpreter
+        self.device = None
+        self.doc = None
+        self.parser = None
+        self.resmgr = None
+        self.interpreter = None
 
     def text(self, clean=True):
         """ 
