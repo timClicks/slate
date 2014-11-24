@@ -1,4 +1,7 @@
-from StringIO import StringIO
+try:
+    from cStringIO import StringIO
+except ImportError
+    from StringIO import StringIO
 
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfinterp import PDFResourceManager
