@@ -1,6 +1,6 @@
 try:
     from cStringIO import StringIO
-except ImportError
+except ImportError:
     from StringIO import StringIO
 
 from pdfminer.pdfparser import PDFParser
