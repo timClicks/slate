@@ -13,7 +13,7 @@ try:
 except ImportError:
     from pdfminer.pdfdocument import PDFDocument
 
-from pdfminer.pdfpage import PDFPage
+from pdfminer.pdfparser import PDFPage
 
 import utils
 
