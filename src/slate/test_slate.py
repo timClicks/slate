@@ -13,7 +13,7 @@ def pytest_funcarg__doc(request):
         return PDF(f)
 
 def pytest_funcarg__passwd(request):
-    with open('protected.pdf') as f:
+    with open('protected.pdf', 'rb') as f:
         return PDF(f, 'a')
 
 def test_basic(doc):

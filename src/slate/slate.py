@@ -1,7 +1,18 @@
+# Modernise old pythons
+from __future__ import print_function, unicode_literals
+
 try:
-    from cStringIO import StringIO
+    # Modern Python
+    from io import BytesIO
+    import chardet
 except ImportError:
-    from StringIO import StringIO
+    # Old Python
+    try:
+        from cStringIO import StringIO as BytesIO
+    except ImportError:
+        from StringIO import StringIO as BytesIO
+
+import sys
 
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfinterp import PDFResourceManager
@@ -21,8 +32,8 @@ __all__ = ['PDF']
 
 class PDFPageInterpreter(PI):
     def process_page(self, page):
-        if 1 <= self.debug:
-            print >>stderr, 'Processing page: %r' % page
+        if getattr(self, "debug", 0) >= 1:  # Attribute missing in pdfminer.six?
+            print("Processing page: {}".format(page), file=sys.stderr)
         (x0,y0,x1,y1) = page.mediabox
         if page.rotate == 90:
             ctm = (0,-1,1,0, -y0,x1)
@@ -41,11 +52,13 @@ class PDFPageInterpreter(PI):
 
 class PDF(list):
     def __init__(self, file, password='', just_text=1, check_extractable=True):
+        if sys.version_info.major > 2 and isinstance(password, str):
+            password = password.encode()
         self.parser = PDFParser(file)
         self.doc = PDFDocument(self.parser, password)
         if not check_extractable or self.doc.is_extractable:
             self.resmgr = PDFResourceManager()
-            self.device = TextConverter(self.resmgr, outfp=StringIO())
+            self.device = TextConverter(self.resmgr, outfp=BytesIO())
             self.interpreter = PDFPageInterpreter(
                self.resmgr, self.device)
             for page in PDFPage.create_pages(self.doc):
@@ -66,7 +79,7 @@ class PDF(list):
         self.resmgr = None
         self.interpreter = None
 
-    def text(self, clean=True):
+    def text(self, clean=True, stringify=True):
         """ 
         Returns the text of the PDF as a single string.
         Options:
@@ -74,7 +87,12 @@ class PDF(list):
           :clean:
             Removes misc cruft, like lots of whitespace.
         """
+        as_text = b''.join(self)
+        if stringify and sys.version_info.major > 2:
+            # Modern Python; detect encoding and cast to string
+            guessed_encoding = chardet.detect(as_text)
+            as_text = as_text.decode(guessed_encoding['encoding'])
         if clean:
-            return utils.normalise_whitespace(''.join(self))
+            return utils.normalise_whitespace(as_text)
         else:
-            return ''.join(self) 
+            return as_text
