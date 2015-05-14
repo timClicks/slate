@@ -5,12 +5,14 @@ try:
     # Modern Python
     from io import BytesIO
     import chardet
+    from . import utils
 except ImportError:
     # Old Python
     try:
         from cStringIO import StringIO as BytesIO
     except ImportError:
         from StringIO import StringIO as BytesIO
+    import utils
 
 import sys
 
@@ -25,8 +27,6 @@ except ImportError:
     from pdfminer.pdfdocument import PDFDocument
 
 from pdfminer.pdfpage import PDFPage
-
-import utils
 
 __all__ = ['PDF']
 

@@ -5,8 +5,11 @@
   Expected to be used with py.test:
   http://codespeak.net/py/dist/test/index.html
 """
-
-from slate import PDF
+import sys
+if sys.version_info.major > 2:
+    from .slate import PDF
+else:
+    from slate import PDF
 
 def pytest_funcarg__doc(request):
     with open('example.pdf', 'rb') as f:
