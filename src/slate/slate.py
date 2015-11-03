@@ -6,7 +6,7 @@ except ImportError:
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfinterp import PDFPageInterpreter as PI
-from pdfminer.pdfdevice import PDFDevice
+from pdfminer.layout import LAParams
 from pdfminer.converter import TextConverter
 # the internal API has changed between versions upstream,
 # allow both here..
@@ -36,19 +36,19 @@ class PDFPageInterpreter(PI):
         else:
             ctm = (1,0,0,1, -x0,-y0)
         self.device.outfp.seek(0)
-        self.device.outfp.buf = ''
         self.device.begin_page(page, ctm)
         self.render_contents(page.resources, page.contents, ctm=ctm)
         self.device.end_page(page)
         return self.device.outfp.getvalue()
 
 class PDF(list):
-    def __init__(self, file, password='', just_text=1, check_extractable=True):
+    def __init__(self, file, password='', just_text=1, check_extractable=True, char_margin=1.0, line_margin=0.1, word_margin=0.1):
         self.parser = PDFParser(file)
         self.doc = PDFDocument(self.parser, password)
+        self.laparams = LAParams(char_margin=char_margin, line_margin=line_margin, word_margin=word_margin)
         if not check_extractable or self.doc.is_extractable:
             self.resmgr = PDFResourceManager()
-            self.device = TextConverter(self.resmgr, outfp=StringIO())
+            self.device = TextConverter(self.resmgr, outfp=StringIO(), laparams=self.laparams)
             self.interpreter = PDFPageInterpreter(
                self.resmgr, self.device)
             for page in PDFPage.create_pages(self.doc):
@@ -78,6 +78,6 @@ class PDF(list):
             Removes misc cruft, like lots of whitespace.
         """
         if clean:
-            return utils.normalise_whitespace(''.join(self))
+            return utils.normalise_whitespace(''.join(self).replace('\n', ' '))
         else:
             return ''.join(self) 
