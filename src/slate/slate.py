@@ -8,13 +8,16 @@ from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfinterp import PDFPageInterpreter as PI
 from pdfminer.pdfdevice import PDFDevice
 from pdfminer.converter import TextConverter
+# the internal API has changed between versions upstream,
+# allow both here..
 try:
     from pdfminer.pdfparser import PDFDocument
 except ImportError:
     from pdfminer.pdfdocument import PDFDocument
-
-from pdfminer.pdfpage import PDFPage
-
+try:
+    from pdfmine.pdfparser import PDFPage
+except ImportError:
+    from pdfminer.pdfpage import PDFPage
 import utils
 
 __all__ = ['PDF']
