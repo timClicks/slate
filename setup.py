@@ -2,6 +2,14 @@
 
 from setuptools import setup, find_packages
 
+import sys
+PYTHON_3 = sys.version_info[0] == 3
+if PYTHON_3:
+    pdfminer = 'pdfminer3k'
+else:
+    pdfminer = 'pdfminer'
+
+
 setup(name='slate',
       version='0.4.1',
       description='Extract text from PDF documents easily.',
@@ -12,7 +20,7 @@ setup(name='slate',
       exclude_package_data={'': ['.gitignore']},
       packages=find_packages('src'),
       package_dir={'': 'src'},
-      requires=['pdfminer'],
+      requires=[pdfminer],
       install_requires=['distribute'],
       classifiers= [
         'Development Status :: 4 - Beta',
