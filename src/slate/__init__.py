@@ -1,13 +1,13 @@
 #! /usr/env/bin python
 
-""" 
+"""
 slate provides a convenient interface to PDFMiner[1].
 
 Intializing a slate.PDF object will provide you with
 the text from the source file as a list of pages. So,
 a five page PDF file will have a range of 0-4.
 
-    >>> with open('example.pdf', 'rb') as f: 
+    >>> with open('example.pdf', 'rb') as f:
     ...    PDF(f) #doctest: +ELLIPSIS
     ...
     [..., ..., ..., ...]
@@ -19,8 +19,8 @@ Beware of page numbers. slate.PDF objects start at 0.
     ...
     >>> "Hello, I'm page three." in doc[2]
     True
- 
-Blank pages are empty strings: 
+
+Blank pages are empty strings:
 
     >>> doc[1]
     ''
@@ -35,14 +35,14 @@ remove unnecessary whitespace, e.g. '  \n  \x0c' => ' '.
     False
 
 Passwords are supported. Use them as the second argument
-of your intialization. Currently, UTF-8 encoding is 
-hard-coded. If you would like to access more advanced 
+of your intialization. Currently, UTF-8 encoding is
+hard-coded. If you would like to access more advanced
 features, you should take a look at the PDFMiner API[2].
 
     >>> with open('protected.pdf', 'rb') as f:
     ...    PDF(f, 'a')[0].strip()
     'Chamber of secrets.'
-    
+
 
   [1] http://www.unixuser.org/~euske/python/pdfminer/index.html
   [2] http://www.unixuser.org/~euske/python/pdfminer/programming.html
@@ -63,4 +63,4 @@ features, you should take a look at the PDFMiner API[2].
 #You should have received a copy of the GNU General Public License
 #along with slate.  If not, see <http://www.gnu.org/licenses/>.
 
-from slate import PDF
+from .classes import PDF

@@ -1,12 +1,12 @@
-""" 
-  Tests for slate 
+"""
+  Tests for slate
   http://pypi.python.org/slate
 
   Expected to be used with py.test:
   http://codespeak.net/py/dist/test/index.html
 """
 
-from slate import PDF
+from classes import PDF
 
 def pytest_funcarg__doc(request):
     with open('example.pdf', 'rb') as f:
