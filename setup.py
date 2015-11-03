@@ -11,12 +11,12 @@ else:
 
 
 setup(name='slate',
-      version='0.4.1',
+      version='0.5.0',
       description='Extract text from PDF documents easily.',
       author='Tim McNamara',
       author_email='paperless@timmcnamara.co.nz',
       keywords=('pdf', 'text', 'text-extraction'),
-      license = "GPL v3 or later",
+      license = "MIT License",
       exclude_package_data={'': ['.gitignore']},
       packages=find_packages('src'),
       package_dir={'': 'src'},
@@ -25,7 +25,7 @@ setup(name='slate',
       classifiers= [
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.6',
         'Topic :: Office/Business',
