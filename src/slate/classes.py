@@ -19,7 +19,7 @@ try:
 except ImportError:
     from pdfminer.pdfdocument import PDFDocument
 try:
-    from pdfmine.pdfparser import PDFPage
+    from pdfminer.pdfparser import PDFPage
 except ImportError:
     from pdfminer.pdfpage import PDFPage
 import utils
