@@ -11,7 +11,7 @@ else:
 
 
 setup(name='slate',
-      version='0.5.0',
+      version='0.5.1',
       description='Extract text from PDF documents easily.',
       author='Tim McNamara',
       author_email='paperless@timmcnamara.co.nz',
