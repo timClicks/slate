@@ -10,7 +10,10 @@ class TestSlate(unittest.TestCase):
             self.passwd = PDF(f, 'a')
 
     def test_basic(self):
-        assert self.doc[0] == 'This is a test.\x0c'
+        assert self.doc[0] == 'This is a test.\n\n\x0c'
+
+    def test_no_text_carry_over(self):
+        assert self.doc[1] == '\x0c'
 
     def test_metadata_extraction(self):
         assert self.doc.metadata
@@ -22,7 +25,7 @@ class TestSlate(unittest.TestCase):
         assert '\x0c' in self.doc.text(clean=0)
 
     def test_password(self):
-        assert self.passwd[0] == "Chamber of secrets.\x0c"
+        assert self.passwd[0] == "Chamber of secrets.\n\n\x0c"
 
 if __name__ == '__main__':
     unittest.main()
