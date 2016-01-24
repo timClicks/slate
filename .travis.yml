@@ -1,0 +1,15 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+before_install:
+  - pip install pdfminer || pip install pdfminer3k
+install:
+  - pip install .
+before_script:
+  - cd src/slate
+script:
+  - python unittests.py
+  - python test_slate.py
