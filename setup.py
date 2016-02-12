@@ -9,9 +9,11 @@ if PYTHON_3:
 else:
     pdfminer = 'pdfminer'
 
+with open('README') as f:
+    long_description = f.read()
 
 setup(name='slate',
-      version='0.5.1',
+      version='0.5.2',
       description='Extract text from PDF documents easily.',
       author='Tim McNamara',
       author_email='paperless@timmcnamara.co.nz',
@@ -21,7 +23,7 @@ setup(name='slate',
       packages=find_packages('src'),
       package_dir={'': 'src'},
       requires=[pdfminer],
-      install_requires=['distribute'],
+      install_requires=['distribute', pdfminer],
       classifiers= [
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -32,5 +34,5 @@ setup(name='slate',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Processing',
         'Topic :: Utilities'],
-      long_description = open('README').read(),
+      long_description=long_description,
       url='http://github.com/timClicks/slate')
