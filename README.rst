@@ -10,7 +10,7 @@ Slate provides one class, PDF. PDF takes a file-like object and
 will extract all text from the document, presentating each page
 as a string of text::
 
-    >>> with open('example.pdf') as f:
+    >>> with open('example.pdf', 'rb') as f:
     ...    doc = slate.PDF(f)
     ...
     >>> doc 
@@ -21,7 +21,7 @@ as a string of text::
 If your pdf is password protected, pass the password as the
 second argument::
 
-    >>> with open('secrets.pdf') as f:
+    >>> with open('secrets.pdf', 'rb') as f:
     ...     doc = slate.PDF(f, 'password')
     ...
     >>> doc[0]
@@ -38,9 +38,9 @@ What is wrong with PDFMiner?
 ----------------------------
 
 1. Getting simple things done, like extracting the text
- is quite complex. The program is not designed to return
- Python objects, which makes interfacing things irritating.
+   is quite complex. The program is not designed to return
+   Python objects, which makes interfacing things irritating.
 2. It's an extremely complete set of tools, with multiple 
- and moderately  steep learning curves.
+   and moderately  steep learning curves.
 3. It's not written with hackability in mind.
 
