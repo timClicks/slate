@@ -12,7 +12,7 @@ PYTHON_3 = sys.version_info[0] == 3
 import os
 
 if PYTHON_3:
-    from .classes import PDF
+    from slate.classes import PDF
 else:
     from classes import PDF
 
