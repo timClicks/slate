@@ -9,7 +9,7 @@ if PYTHON_3:
 else:
     pdfminer = 'pdfminer'
 
-with open('README') as f:
+with open('README.rst') as f:
     long_description = f.read()
 
 setup(name='slate',
