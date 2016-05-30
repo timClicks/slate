@@ -5,3 +5,5 @@ dist/*
 *.pyc
 *.pyo
 slate.egg-info
+.cache
+.*.swp
