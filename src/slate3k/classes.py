@@ -23,7 +23,7 @@ try:
 except ImportError:
     from pdfminer.pdfpage import PDFPage
 if PYTHON_3:
-    import slate.utils as utils
+    import .utils as utils
 else:
     import utils
 

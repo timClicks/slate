@@ -12,7 +12,7 @@ PYTHON_3 = sys.version_info[0] == 3
 import os
 
 if PYTHON_3:
-    from slate.classes import PDF
+    from .classes import PDF
 else:
     from classes import PDF
 
@@ -44,5 +44,3 @@ def get_pdf_path(pdf_file):
     return os.path.join(
         os.path.dirname(__file__),
         pdf_file)
-
-

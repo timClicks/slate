@@ -1,7 +1,7 @@
 import unittest
 
 import os
-from slate import PDF
+from . import PDF
 
 class TestSlate(unittest.TestCase):
     def setUp(self):
