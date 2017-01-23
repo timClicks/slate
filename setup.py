@@ -12,7 +12,7 @@ else:
 with open('README.rst') as f:
     long_description = f.read()
 
-setup(name='slate',
+setup(name='slate3k',
       version='0.5.2',
       description='Extract text from PDF documents easily.',
       author='Tim McNamara',
