@@ -23,7 +23,7 @@ try:
 except ImportError:
     from pdfminer.pdfpage import PDFPage
 if PYTHON_3:
-    import .utils as utils
+    from . import utils
 else:
     import utils
 
