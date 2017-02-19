@@ -13,10 +13,10 @@ with open('README.rst') as f:
     long_description = f.read()
 
 setup(name='slate3k',
-      version='0.5.2',
+      version='0.5.3',
       description='Extract text from PDF documents easily.',
-      author='Tim McNamara',
-      author_email='paperless@timmcnamara.co.nz',
+      author='TakesxiSximada',
+      author_email='sximada@gmail.com',
       keywords=('pdf', 'text', 'text-extraction'),
       license = "MIT License",
       exclude_package_data={'': ['.gitignore']},
@@ -29,10 +29,11 @@ setup(name='slate3k',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Office/Business',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Processing',
         'Topic :: Utilities'],
       long_description=long_description,
-      url='http://github.com/timClicks/slate')
+      url='https://github.com/TakesxiSximada/slate3k')

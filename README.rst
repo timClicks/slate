@@ -3,6 +3,16 @@ slate: the easiest way to get text from PDFs in Python
 ======================================================
 
 
+THIS PROJECT IS A FORK OF slate
+================================
+
+Original project is https://github.com/timClicks/slate . It is not supported Python3.
+I thank the original writer @timClicks and other contributors.
+
+
+Slate
+=====
+
 Slate is a Python package that simplifies the process of extracting
 text from PDF files. It depends on the PDFMiner package.
 
@@ -13,7 +23,7 @@ as a string of text::
     >>> with open('example.pdf', 'rb') as f:
     ...    doc = slate.PDF(f)
     ...
-    >>> doc 
+    >>> doc
     [..., ..., ...]
     >>> doc[1]
     'Text from page 2...'
@@ -40,7 +50,6 @@ What is wrong with PDFMiner?
 1. Getting simple things done, like extracting the text
    is quite complex. The program is not designed to return
    Python objects, which makes interfacing things irritating.
-2. It's an extremely complete set of tools, with multiple 
+2. It's an extremely complete set of tools, with multiple
    and moderately  steep learning curves.
 3. It's not written with hackability in mind.
-
