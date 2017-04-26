@@ -13,7 +13,7 @@ as a string of text:
   >>> with open('example.pdf') as f:
   ...    doc = slate.PDF(f)
   ...
-  >>> doc 
+  >>> doc
   [..., ..., ...]
   >>> doc[1]
   'Text from page 2...'
@@ -33,6 +33,12 @@ More complex operations
 If you would like access to the images, font files and other
 information, then take some time to learn the PDFMiner API.
 
+Installation
+------------
+
+To install Slate, clone the repository and run
+
+  $ python setup.py install
 
 What is wrong with PDFMiner?
 ----------------------------
@@ -40,7 +46,6 @@ What is wrong with PDFMiner?
   1. Getting simple things done, like extracting the text
      is quite complex. The program is not designed to return
      Python objects, which makes interfacing things irritating.
-  2. It's an extremely complete set of tools, with multiple 
+  2. It's an extremely complete set of tools, with multiple
      and moderately  steep learning curves.
   3. It's not written with hackability in mind.
-
