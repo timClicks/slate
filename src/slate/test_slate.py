@@ -6,22 +6,18 @@
   http://codespeak.net/py/dist/test/index.html
 """
 
-import sys
-PYTHON_3 = sys.version_info[0] == 3
-
 import os
+import pytest
 
-if PYTHON_3:
-    from slate.classes import PDF
-else:
-    from classes import PDF
+from .classes import PDF
 
-
-def pytest_funcarg__doc(request):
+@pytest.fixture
+def doc():
     with open(get_pdf_path('example.pdf'), 'rb') as f:
         return PDF(f)
 
-def pytest_funcarg__passwd(request):
+@pytest.fixture
+def passwd():
     with open(get_pdf_path('protected.pdf'), 'rb') as f:
         return PDF(f, 'a')
 
