@@ -22,7 +22,7 @@ try:
     from pdfminer.pdfparser import PDFPage
 except ImportError:
     from pdfminer.pdfpage import PDFPage
-from . import  utils
+from . import utils
 
 __all__ = ['PDF']
 
