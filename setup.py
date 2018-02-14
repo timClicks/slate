@@ -23,7 +23,7 @@ setup(name='slate',
       packages=find_packages('src'),
       package_dir={'': 'src'},
       requires=[pdfminer],
-      install_requires=['distribute', pdfminer],
+      install_requires=[pdfminer],
       classifiers= [
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
