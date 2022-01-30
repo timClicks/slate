@@ -41,6 +41,6 @@ What is wrong with PDFMiner?
      is quite complex. The program is not designed to return
      Python objects, which makes interfacing things irritating.
   2. It's an extremely complete set of tools, with multiple 
-     and moderately  steep learning curves.
+     and moderately steep learning curves.
   3. It's not written with hackability in mind.
 
