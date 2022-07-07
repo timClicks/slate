@@ -1,13 +1,16 @@
+import os
 import unittest
 
 from slate import PDF
 
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 class TestSlate(unittest.TestCase):
     def setUp(self):
-        with open("example.pdf", "rb") as f:
+        with open(os.path.join(THIS_DIR, "example.pdf"), "rb") as f:
             self.doc = PDF(f)
-        with open("protected.pdf", "rb") as f:
+        with open(os.path.join(THIS_DIR, "protected.pdf"), "rb") as f:
             self.passwd = PDF(f, "a")
 
     def test_basic(self):

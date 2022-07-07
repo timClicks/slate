@@ -6,21 +6,33 @@
   http://codespeak.net/py/dist/test/index.html
 """
 
-from classes import PDF
+import os
+
+import pytest
+
+from slate import PDF
+
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def pytest_funcarg__doc(request):
-    with open("example.pdf", "rb") as f:
+@pytest.fixture
+def doc():
+    with open(os.path.join(THIS_DIR, "example.pdf"), "rb") as f:
         return PDF(f)
 
 
-def pytest_funcarg__passwd(request):
-    with open("protected.pdf") as f:
+@pytest.fixture
+def passwd():
+    with open(os.path.join(THIS_DIR, "protected.pdf"), "rb") as f:
         return PDF(f, "a")
 
 
 def test_basic(doc):
     assert doc[0] == "This is a test.\n\n\x0c"
+
+
+def test_no_text_carry_over(doc):
+    assert doc[1] == "\x0c"
 
 
 def test_metadata_extraction(doc):
