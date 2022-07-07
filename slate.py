@@ -60,7 +60,7 @@ from pdfminer.pdfparser import PDFParser
 __all__ = ["PDF"]
 
 
-class PDF(list):
+class PDF:
     def __init__(
         self,
         file,
@@ -77,12 +77,14 @@ class PDF(list):
         resmgr = PDFResourceManager()
         device = TextConverter(resmgr, outfp=io.StringIO(), laparams=self.laparams)
         interpreter = PDFPageInterpreter(resmgr, device)
+        pages = []
         for page in PDFPage.get_pages(
             file, password=password, check_extractable=check_extractable
         ):
             interpreter.process_page(page)
-            self.append(device.outfp.getvalue())
+            pages.append(device.outfp.getvalue())
             device.outfp = io.StringIO()
+        self._pages = pages
         self.metadata = PDFDocument(PDFParser(file), password=password).info
         if just_text:
             self.device = None
@@ -93,6 +95,15 @@ class PDF(list):
             self.resmgr = resmgr
             self.interpreter = interpreter
 
+    def __len__(self):
+        return len(self._pages)
+
+    def __getitem__(self, index):
+        return self._pages[index]
+
+    def __repr__(self):
+        return repr(self._pages)
+
     def text(self, clean=True):
         """
         Returns the text of the PDF as a single string.
@@ -101,5 +112,5 @@ class PDF(list):
           :clean:
             Removes misc cruft, like lots of whitespace.
         """
-        s = "".join(self)
+        s = " ".join(self._pages)
         return re.sub(r"\s+", " ", s) if clean else s
