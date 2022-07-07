@@ -1,34 +1,16 @@
+import io
 import re
 import sys
-from io import StringIO
 
-from pdfminer.converter import TextConverter
-from pdfminer.layout import LAParams
-from pdfminer.pdfinterp import PDFPageInterpreter as PI
-from pdfminer.pdfinterp import PDFResourceManager
-from pdfminer.pdfparser import PDFParser
-
-# the internal API has changed between versions upstream,
-# allow both here..
-try:
-    from pdfminer.pdfparser import PDFDocument
-except ImportError:
-    from pdfminer.pdfdocument import PDFDocument
-try:
-    from pdfminer.pdfparser import PDFPage
-except ImportError:
-    from pdfminer.pdfpage import PDFPage
+from pdfminer import converter, layout, pdfinterp, pdfparser
 
 
 __all__ = ["PDF"]
 
 
-class PDFPageInterpreter(PI):
+class PDFPageInterpreter(pdfinterp.PDFPageInterpreter):
     def process_page(self, page):
-        if hasattr(self, "debug"):
-            if 1 <= self.debug:
-                print >> stderr, "Processing page: %r" % page
-        (x0, y0, x1, y1) = page.mediabox
+        x0, y0, x1, y1 = page.mediabox
         if page.rotate == 90:
             ctm = (0, -1, 1, 0, -y0, x1)
         elif page.rotate == 180:
@@ -56,39 +38,33 @@ class PDF(list):
         line_margin=0.1,
         word_margin=0.1,
     ):
-        self.parser = PDFParser(file)
-        self.laparams = LAParams(
+        self.parser = pdfparser.PDFParser(file)
+        self.laparams = layout.LAParams(
             char_margin=char_margin, line_margin=line_margin, word_margin=word_margin
         )
 
-        self.doc = PDFDocument()
+        self.doc = pdfparser.PDFDocument()
         self.parser.set_document(self.doc)
         self.doc.set_parser(self.parser)
         self.doc.initialize(password)
 
         if not check_extractable or self.doc.is_extractable:
-            self.resmgr = PDFResourceManager()
-            self.device = TextConverter(
-                self.resmgr, outfp=StringIO(), laparams=self.laparams
+            self.resmgr = pdfinterp.PDFResourceManager()
+            self.device = converter.TextConverter(
+                self.resmgr, outfp=io.StringIO(), laparams=self.laparams
             )
             self.interpreter = PDFPageInterpreter(self.resmgr, self.device)
             for page in self.doc.get_pages():
                 self.append(self.interpreter.process_page(page))
             self.metadata = self.doc.info
         if just_text:
-            self._cleanup()
-
-    def _cleanup(self):
-        """
-        Frees lots of non-textual information, such as the fonts
-        and images and the objects that were needed to parse the
-        PDF.
-        """
-        self.device = None
-        self.doc = None
-        self.parser = None
-        self.resmgr = None
-        self.interpreter = None
+            # Free lots of non-textual information, such as the fonts and images and
+            # the objects that were needed to parse the PDF
+            self.device = None
+            self.doc = None
+            self.parser = None
+            self.resmgr = None
+            self.interpreter = None
 
     def text(self, clean=True):
         """
