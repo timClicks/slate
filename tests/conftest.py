@@ -1,1 +1,0 @@
-option_doctestmodules = True

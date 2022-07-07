@@ -2,7 +2,7 @@ import re
 
 
 def normalise_whitespace(s):
-    """
+    r"""
     Returns a string that has at most one whitespace
     character between non-whitespace characters. We
     leave a few extra spaces because most NLP parsers
