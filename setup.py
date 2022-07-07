@@ -2,26 +2,21 @@
 
 import sys
 
-from setuptools import find_packages, setup
-
-pdfminer = "pdfminer3k"
+import setuptools
 
 with open("README") as f:
     long_description = f.read()
 
-setup(
+setuptools.setup(
     name="slate",
     version="0.5.2",
     description="Extract text from PDF documents easily.",
     author="Tim McNamara",
     author_email="paperless@timmcnamara.co.nz",
-    keywords=("pdf", "text", "text-extraction"),
+    keywords=["pdf", "text", "text-extraction"],
     license="MIT License",
-    exclude_package_data={"": [".gitignore"]},
-    packages=find_packages("src"),
-    package_dir={"": "src"},
-    requires=[pdfminer],
-    install_requires=["setuptools", pdfminer],
+    py_modules=["slate"],
+    install_requires=["pdfminer3k"],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
