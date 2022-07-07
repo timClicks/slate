@@ -49,6 +49,7 @@ features, you should take a look at the PDFMiner API[2].
 import io
 import re
 import sys
+from typing import BinaryIO, Sequence, Union, overload
 
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -60,16 +61,16 @@ from pdfminer.pdfparser import PDFParser
 __all__ = ["PDF"]
 
 
-class PDF:
+class PDF(Sequence[str]):
     def __init__(
         self,
-        file,
-        password="",
-        just_text=1,
-        check_extractable=True,
-        char_margin=1.0,
-        line_margin=0.1,
-        word_margin=0.1,
+        file: BinaryIO,
+        password: str = "",
+        just_text: bool = True,
+        check_extractable: bool = True,
+        char_margin: float = 1.0,
+        line_margin: float = 0.1,
+        word_margin: float = 0.1,
     ):
         self.laparams = LAParams(
             char_margin=char_margin, line_margin=line_margin, word_margin=word_margin
@@ -95,16 +96,24 @@ class PDF:
             self.resmgr = resmgr
             self.interpreter = interpreter
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._pages)
 
-    def __getitem__(self, index):
+    @overload
+    def __getitem__(self, i: int) -> str:
+        ...
+
+    @overload
+    def __getitem__(self, s: slice) -> Sequence[str]:
+        ...
+
+    def __getitem__(self, index: Union[int, slice]) -> Union[str, Sequence[str]]:
         return self._pages[index]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return repr(self._pages)
 
-    def text(self, clean=True):
+    def text(self, clean: bool = True) -> str:
         """
         Returns the text of the PDF as a single string.
         Options:
