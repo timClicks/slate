@@ -24,7 +24,7 @@ try:
 except ImportError:
     from pdfminer.pdfpage import PDFPage
 
-import utils
+from . import utils
 
 __all__ = ["PDF"]
 
