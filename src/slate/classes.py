@@ -1,4 +1,5 @@
 import sys
+
 PYTHON_3 = sys.version_info[0] == 3
 if PYTHON_3:
     from io import StringIO
@@ -6,12 +7,12 @@ else:
     from StringIO import StringIO
     from pdfminer.pdfpage import PDFPage
 
-
-from pdfminer.pdfparser import PDFParser
-from pdfminer.pdfinterp import PDFResourceManager
-from pdfminer.pdfinterp import PDFPageInterpreter as PI
-from pdfminer.layout import LAParams
 from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfinterp import PDFPageInterpreter as PI
+from pdfminer.pdfinterp import PDFResourceManager
+from pdfminer.pdfparser import PDFParser
+
 # the internal API has changed between versions upstream,
 # allow both here..
 try:
@@ -22,24 +23,26 @@ try:
     from pdfminer.pdfparser import PDFPage
 except ImportError:
     from pdfminer.pdfpage import PDFPage
+
 import utils
 
-__all__ = ['PDF']
+__all__ = ["PDF"]
+
 
 class PDFPageInterpreter(PI):
     def process_page(self, page):
-        if hasattr(self, 'debug'):
+        if hasattr(self, "debug"):
             if 1 <= self.debug:
-                print >>stderr, 'Processing page: %r' % page
-        (x0,y0,x1,y1) = page.mediabox
+                print >> stderr, "Processing page: %r" % page
+        (x0, y0, x1, y1) = page.mediabox
         if page.rotate == 90:
-            ctm = (0,-1,1,0, -y0,x1)
+            ctm = (0, -1, 1, 0, -y0, x1)
         elif page.rotate == 180:
-            ctm = (-1,0,0,-1, x1,y1)
+            ctm = (-1, 0, 0, -1, x1, y1)
         elif page.rotate == 270:
-            ctm = (0,1,-1,0, y1,-x0)
+            ctm = (0, 1, -1, 0, y1, -x0)
         else:
-            ctm = (1,0,0,1, -x0,-y0)
+            ctm = (1, 0, 0, 1, -x0, -y0)
         self.device.outfp.seek(0)
         self.device.outfp.truncate(0)
         self.device.begin_page(page, ctm)
@@ -47,10 +50,22 @@ class PDFPageInterpreter(PI):
         self.device.end_page(page)
         return self.device.outfp.getvalue()
 
+
 class PDF(list):
-    def __init__(self, file, password='', just_text=1, check_extractable=True, char_margin=1.0, line_margin=0.1, word_margin=0.1):
+    def __init__(
+        self,
+        file,
+        password="",
+        just_text=1,
+        check_extractable=True,
+        char_margin=1.0,
+        line_margin=0.1,
+        word_margin=0.1,
+    ):
         self.parser = PDFParser(file)
-        self.laparams = LAParams(char_margin=char_margin, line_margin=line_margin, word_margin=word_margin)
+        self.laparams = LAParams(
+            char_margin=char_margin, line_margin=line_margin, word_margin=word_margin
+        )
 
         if PYTHON_3:
             self.doc = PDFDocument()
@@ -62,9 +77,10 @@ class PDF(list):
 
         if not check_extractable or self.doc.is_extractable:
             self.resmgr = PDFResourceManager()
-            self.device = TextConverter(self.resmgr, outfp=StringIO(), laparams=self.laparams)
-            self.interpreter = PDFPageInterpreter(
-               self.resmgr, self.device)
+            self.device = TextConverter(
+                self.resmgr, outfp=StringIO(), laparams=self.laparams
+            )
+            self.interpreter = PDFPageInterpreter(self.resmgr, self.device)
 
             if PYTHON_3:
                 page_generator = self.doc.get_pages()
@@ -98,6 +114,6 @@ class PDF(list):
             Removes misc cruft, like lots of whitespace.
         """
         if clean:
-            return utils.normalise_whitespace(''.join(self).replace('\n', ' '))
+            return utils.normalise_whitespace("".join(self).replace("\n", " "))
         else:
-            return ''.join(self)
+            return "".join(self)

@@ -8,25 +8,32 @@
 
 from classes import PDF
 
+
 def pytest_funcarg__doc(request):
-    with open('example.pdf', 'rb') as f:
+    with open("example.pdf", "rb") as f:
         return PDF(f)
 
+
 def pytest_funcarg__passwd(request):
-    with open('protected.pdf') as f:
-        return PDF(f, 'a')
+    with open("protected.pdf") as f:
+        return PDF(f, "a")
+
 
 def test_basic(doc):
-    assert doc[0] == 'This is a test.\n\n\x0c'
+    assert doc[0] == "This is a test.\n\n\x0c"
+
 
 def test_metadata_extraction(doc):
     assert doc.metadata
 
+
 def test_text_method(doc):
     assert "This is a test" in doc.text()
 
+
 def test_text_method_unclean(doc):
-    assert '\x0c' in doc.text(clean=0)
+    assert "\x0c" in doc.text(clean=0)
+
 
 def test_password(passwd):
     assert passwd[0] == "Chamber of secrets.\n\n\x0c"
