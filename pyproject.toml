@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "slate"
 version = "0.6.0"
 description = "Extract text from PDF documents easily"
-readme = "README"
+readme = "README.md"
 requires-python = ">=3"
 license = {text = "MIT License"}
 authors = [{name = "Tim McNamara", email = "paperless@timmcnamara.co.nz"}]
