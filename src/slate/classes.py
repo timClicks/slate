@@ -1,5 +1,5 @@
+import re
 import sys
-
 from io import StringIO
 
 from pdfminer.converter import TextConverter
@@ -19,7 +19,6 @@ try:
 except ImportError:
     from pdfminer.pdfpage import PDFPage
 
-from . import utils
 
 __all__ = ["PDF"]
 
@@ -99,7 +98,5 @@ class PDF(list):
           :clean:
             Removes misc cruft, like lots of whitespace.
         """
-        if clean:
-            return utils.normalise_whitespace("".join(self).replace("\n", " "))
-        else:
-            return "".join(self)
+        s = "".join(self)
+        return re.sub(r"\s+", " ", s) if clean else s
