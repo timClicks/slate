@@ -1,11 +1,6 @@
 import sys
 
-PYTHON_3 = sys.version_info[0] == 3
-if PYTHON_3:
-    from io import StringIO
-else:
-    from StringIO import StringIO
-    from pdfminer.pdfpage import PDFPage
+from io import StringIO
 
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -67,13 +62,10 @@ class PDF(list):
             char_margin=char_margin, line_margin=line_margin, word_margin=word_margin
         )
 
-        if PYTHON_3:
-            self.doc = PDFDocument()
-            self.parser.set_document(self.doc)
-            self.doc.set_parser(self.parser)
-            self.doc.initialize(password)
-        else:
-            self.doc = PDFDocument(self.parser, password)
+        self.doc = PDFDocument()
+        self.parser.set_document(self.doc)
+        self.doc.set_parser(self.parser)
+        self.doc.initialize(password)
 
         if not check_extractable or self.doc.is_extractable:
             self.resmgr = PDFResourceManager()
@@ -81,13 +73,7 @@ class PDF(list):
                 self.resmgr, outfp=StringIO(), laparams=self.laparams
             )
             self.interpreter = PDFPageInterpreter(self.resmgr, self.device)
-
-            if PYTHON_3:
-                page_generator = self.doc.get_pages()
-            else:
-                page_generator = PDFPage.create_pages(self.doc)
-
-            for page in page_generator:
+            for page in self.doc.get_pages():
                 self.append(self.interpreter.process_page(page))
             self.metadata = self.doc.info
         if just_text:

@@ -4,11 +4,7 @@ import sys
 
 from setuptools import find_packages, setup
 
-PYTHON_3 = sys.version_info[0] == 3
-if PYTHON_3:
-    pdfminer = "pdfminer3k"
-else:
-    pdfminer = "pdfminer"
+pdfminer = "pdfminer3k"
 
 with open("README") as f:
     long_description = f.read()
@@ -31,7 +27,7 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 3",
         "Topic :: Office/Business",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Text Processing",
